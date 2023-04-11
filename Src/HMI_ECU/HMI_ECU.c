@@ -10,12 +10,12 @@
  *                                                                                                          *
  ************************************************************************************************************/
 
-#include"lcd.h"
-#include"keypad.h"
-#include"uart.h"
-#include<util/delay.h>
-#include"timer1.h"
-#include<avr/io.h>
+#include "lcd.h"
+#include "keypad.h"
+#include "uart.h"
+#include <util/delay.h>
+#include "timer1.h"
+#include <avr/io.h>
 
 /*******************************************************************************
  *                           Global Variables                                  *
@@ -25,7 +25,7 @@
 unsigned char g_tick = 0;
 
 /* global variable contain the received byte by UART from CONTROL_ECU */
-uint8 receive=0;
+uint8 receive = 0;
 
 /*******************************************************************************
  *                     Functions Definitions                                   *
@@ -38,25 +38,25 @@ uint8 receive=0;
 
 void PASS(void)
 {
-	uint8 key,i;
-	for(i=0;i<5;i++)
+	uint8 key, i;
+	for (i = 0; i < 5; i++)
 	{
 		/* Get the pressed key number, if any switch pressed for more than 500 ms it will considered more than one press */
 		key = KEYPAD_getPressedKey();
 
-		if((key <= 9) && (key >= 0))
+		if ((key <= 9) && (key >= 0))
 		{
-			LCD_displayCharacter('*');   /* display the pressed keypad switch as '*' */
-			UART_sendByte(key);  /* send the pressed key to the CONTROL_ECU */
+			LCD_displayCharacter('*'); /* display the pressed keypad switch as '*' */
+			UART_sendByte(key);		   /* send the pressed key to the CONTROL_ECU */
 		}
 		else
 		{
-			i--;  /* to make the UART send five numbers only not including any characters */
+			i--; /* to make the UART send five numbers only not including any characters */
 		}
 		_delay_ms(500); /* Press time */
 	}
 	key = KEYPAD_getPressedKey();
-	if(key == '=')   /* make '=' as an Enter button */
+	if (key == '=') /* make '=' as an Enter button */
 	{
 		/* Receive a byte 1 or 0 to check that the two passwords are matched or not */
 		receive = UART_recieveByte();
@@ -70,25 +70,25 @@ void PASS(void)
 
 void CHANGE_PASSWORD(void)
 {
-	uint8 key,i;
-	for(i=0;i<5;i++)
+	uint8 key, i;
+	for (i = 0; i < 5; i++)
 	{
 		/* Get the pressed key number, if any switch pressed for more than 500 ms it will considered more than one press */
 		key = KEYPAD_getPressedKey();
 
-		if((key <= 9) && (key >= 0))
+		if ((key <= 9) && (key >= 0))
 		{
-			LCD_displayCharacter('*');   /* display the pressed keypad switch */
-			UART_sendByte(key); /* send the pressed key to the CONTROL_ECU */
+			LCD_displayCharacter('*'); /* display the pressed keypad switch */
+			UART_sendByte(key);		   /* send the pressed key to the CONTROL_ECU */
 		}
 		else
 		{
-			i--;  /* to make the UART send five numbers only not including any characters */
+			i--; /* to make the UART send five numbers only not including any characters */
 		}
 		_delay_ms(500); /* Press time */
 	}
 	key = KEYPAD_getPressedKey();
-	if(key == '=')  /* make '=' as an Enter button */
+	if (key == '=') /* make '=' as an Enter button */
 	{
 		/* Asking the user to enter the same password */
 		LCD_clearScreen();
@@ -96,28 +96,28 @@ void CHANGE_PASSWORD(void)
 		LCD_displayStringRowColumn(1, 0, "Same Pass:");
 	}
 	LCD_moveCursor(1, 11);
-	for(i=0;i<5;i++)
+	for (i = 0; i < 5; i++)
 	{
 		/* Get the pressed key number, if any switch pressed for more than 500 ms it will considered more than one press */
 		key = KEYPAD_getPressedKey();
 
-		if((key <= 9) && (key >= 0))
+		if ((key <= 9) && (key >= 0))
 		{
-			LCD_displayCharacter('*');   /* display the pressed keypad switch */
-			UART_sendByte(key);  /* send the pressed key to the CONTROL_ECU */
+			LCD_displayCharacter('*'); /* display the pressed keypad switch */
+			UART_sendByte(key);		   /* send the pressed key to the CONTROL_ECU */
 		}
 		else
 		{
-			i--;  /* to make the UART send five numbers only not including any characters */
+			i--; /* to make the UART send five numbers only not including any characters */
 		}
 		_delay_ms(500); /* Press time */
 	}
 	key = KEYPAD_getPressedKey();
-	if(key == '=')   /* make '=' as an Enter button */
+	if (key == '=') /* make '=' as an Enter button */
 	{
 		/* Receive a byte 1 or 0 to check that the two passwords are matched or not */
 		receive = UART_recieveByte();
-		_delay_ms(500);  /* to give the UART time to receive the byte */
+		_delay_ms(500); /* to give the UART time to receive the byte */
 	}
 }
 
@@ -143,20 +143,23 @@ void OPEN_CLOSE_DOOR()
 	LCD_displayStringRowColumn(0, 0, "Door is");
 	LCD_displayStringRowColumn(1, 0, "Unlocking");
 
-	g_tick=0; /* begin the counts again to get the needed 15 seconds */
+	g_tick = 0; /* begin the counts again to get the needed 15 seconds */
 
-	while(g_tick <= 15); /* wait until the 15 seconds are over */
+	while (g_tick <= 15)
+		; /* wait until the 15 seconds are over */
 
 	LCD_clearScreen();
 	LCD_displayString("WARNING..."); /* warning to warn the user that the door will close in 3 seconds */
 
-	while(g_tick <= 18); /* wait until the 3 seconds more are over */
+	while (g_tick <= 18)
+		; /* wait until the 3 seconds more are over */
 
 	LCD_clearScreen();
 	LCD_displayStringRowColumn(0, 0, "Door is");
 	LCD_displayStringRowColumn(1, 0, "Locking");
 
-	while(g_tick <= 33); /* wait until the 15 seconds more are over */
+	while (g_tick <= 33)
+		; /* wait until the 15 seconds more are over */
 
 	g_tick = 0; /* make the counter zero again as it finished */
 }
@@ -172,9 +175,9 @@ void BUZZER()
 	LCD_clearScreen();
 	LCD_displayString("ERROR!!!!");
 	g_tick = 0; /* begin the counts again to get the needed 60 seconds (1 minute) */
-	while(g_tick <= 60); /* wait until the 60 seconds more are over */
-	g_tick = 0;  /* make the counter zero again as it finished */
-
+	while (g_tick <= 60)
+		;		/* wait until the 60 seconds more are over */
+	g_tick = 0; /* make the counter zero again as it finished */
 }
 
 /*******************************************************************************
@@ -191,7 +194,7 @@ int main(void)
 	 * baud rate is 9600
 	 */
 
-	UART_ConfigType config1={EIGHT,DISABLED,ONE_BIT,BR7};
+	UART_ConfigType config1 = {EIGHT, DISABLED, ONE_BIT, BR7};
 
 	/* choose the configuration of TIMER1:
 	 * initial value is 0
@@ -200,15 +203,15 @@ int main(void)
 	 * the mode is compare mode
 	 */
 
-	Timer1_ConfigType config2={0,999,F_CPU_1024,CTC};
+	Timer1_ConfigType config2 = {0, 999, F_CPU_1024, CTC};
 
 	Timer1_init(&config2); /* Initialize TIMER1 with the required configurations */
 
-	UART_init(&config1);  /* Initialize UART with the required configurations */
+	UART_init(&config1); /* Initialize UART with the required configurations */
 
 	Timer1_setCallBack(TIMER1_ticks); /* set the TIMER1_ticks to be the callback function */
 
-	LCD_init(); /* Initialize the LCD */
+	LCD_init();							  /* Initialize the LCD */
 	LCD_displayString("Plz enter pass:"); /* Display the message "Plz enter pass" for the first time */
 	LCD_moveCursor(1, 0);
 
@@ -221,7 +224,7 @@ int main(void)
 
 	CHANGE_PASSWORD();
 
-	if(receive == 1) /* if the two passwords are matched receive 1 */
+	if (receive == 1) /* if the two passwords are matched receive 1 */
 	{
 		/* Go to step 2 */
 	}
@@ -233,7 +236,7 @@ int main(void)
 		LCD_moveCursor(1, 0);
 		UART_sendByte('*');
 		CHANGE_PASSWORD();
-		if(receive == 1)
+		if (receive == 1)
 		{
 			/* Go to step 2 */
 		}
@@ -245,7 +248,7 @@ int main(void)
 			LCD_moveCursor(1, 0);
 			UART_sendByte('*');
 			CHANGE_PASSWORD();
-			if(receive == 1)
+			if (receive == 1)
 			{
 				/* Go to step 2 */
 			}
@@ -259,17 +262,17 @@ int main(void)
 		}
 	}
 	/* Step 2 */
-	while(1)
+	while (1)
 	{
 		/* Display the main options on the screen */
 
 		LCD_displayStringRowColumn(0, 0, "+ : Open Door");
-		LCD_displayStringRowColumn(0,13 , "   ");
+		LCD_displayStringRowColumn(0, 13, "   ");
 		LCD_displayStringRowColumn(1, 0, "- : Change Pass");
-		LCD_displayStringRowColumn(1,15 , "  ");
+		LCD_displayStringRowColumn(1, 15, "  ");
 
 		k = KEYPAD_getPressedKey();
-		if(k == '+')  /* you choose to open the door */  /* Step 3 */
+		if (k == '+') /* you choose to open the door */ /* Step 3 */
 		{
 			/* Enter the password to be able to open the door */
 			LCD_clearScreen();
@@ -279,12 +282,12 @@ int main(void)
 			UART_sendByte('#');
 			/* take the password from the user */
 			PASS();
-			if(receive == 1) /* Receive 1 for matched passwords */
+			if (receive == 1) /* Receive 1 for matched passwords */
 			{
 				/* Open the door then close it */
 				OPEN_CLOSE_DOOR();
 			}
-			else  /* If the two passwords don't match then repeat step 1 for the first time */
+			else /* If the two passwords don't match then repeat step 1 for the first time */
 			{
 
 				LCD_clearScreen();
@@ -294,12 +297,12 @@ int main(void)
 				UART_sendByte('#');
 				/* take the password from the user */
 				PASS();
-				if(receive == 1)  /* Receive 1 for matched passwords */
+				if (receive == 1) /* Receive 1 for matched passwords */
 				{
 					/* Open the door then close it */
 					OPEN_CLOSE_DOOR();
 				}
-				else   /* If the two passwords don't match then repeat step 1 for the second time */
+				else /* If the two passwords don't match then repeat step 1 for the second time */
 				{
 					LCD_clearScreen();
 					LCD_displayString("Plz enter pass:");
@@ -308,21 +311,20 @@ int main(void)
 					UART_sendByte('#');
 					/* take the password from the user */
 					PASS();
-					if(receive == 1)  /* Receive 1 for matched passwords */
+					if (receive == 1) /* Receive 1 for matched passwords */
 					{
 						/* Open the door then close it */
 						OPEN_CLOSE_DOOR();
 					}
-					else /* If the two passwords don't match for the last time then turn on the BUZZER */  /* Step 5 */
+					else /* If the two passwords don't match for the last time then turn on the BUZZER */ /* Step 5 */
 					{
 						/* Turn on the BUZZER */
 						BUZZER();
 					}
 				}
-
 			}
 		}
-		else if(k == '-')  /* you choose to change the password */  /* Step 4 */
+		else if (k == '-') /* you choose to change the password */ /* Step 4 */
 		{
 			/* Enter the password to be able to change the password */
 			LCD_clearScreen();
@@ -332,7 +334,7 @@ int main(void)
 			UART_sendByte('#');
 			/* take the password from the user */
 			PASS();
-			if(receive == 1)  /* Receive 1 for matched passwords */
+			if (receive == 1) /* Receive 1 for matched passwords */
 			{
 
 				LCD_clearScreen();
@@ -352,7 +354,7 @@ int main(void)
 				UART_sendByte('#');
 				/* take the password from the user */
 				PASS();
-				if(receive == 1)  /* Receive 1 for matched passwords */
+				if (receive == 1) /* Receive 1 for matched passwords */
 				{
 					LCD_clearScreen();
 					LCD_displayString("Plz enter pass:");
@@ -362,7 +364,7 @@ int main(void)
 					/* calling the function CHANGE_PASSWORD to give the password to the system and save it */
 					CHANGE_PASSWORD();
 				}
-				else  /* If the two passwords don't match then repeat step 1 for the second time */
+				else /* If the two passwords don't match then repeat step 1 for the second time */
 				{
 					LCD_clearScreen();
 					LCD_displayString("Plz enter pass:");
@@ -371,7 +373,7 @@ int main(void)
 					UART_sendByte('#');
 					/* take the password from the user */
 					PASS();
-					if(receive == 1)  /* Receive 1 for matched passwords */
+					if (receive == 1) /* Receive 1 for matched passwords */
 					{
 						LCD_clearScreen();
 						LCD_displayString("Plz enter pass:");
@@ -381,7 +383,7 @@ int main(void)
 						/* calling the function CHANGE_PASSWORD to give the password to the system and save it */
 						CHANGE_PASSWORD();
 					}
-					else  /* If the two passwords don't match then repeat step 1 for the last time */  /* Step 5 */
+					else /* If the two passwords don't match then repeat step 1 for the last time */ /* Step 5 */
 					{
 						/* Turn on the BUZZER */
 						BUZZER();
@@ -389,9 +391,5 @@ int main(void)
 				}
 			}
 		}
-
 	}
-
 }
-
-
