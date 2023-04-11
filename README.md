@@ -51,5 +51,6 @@ Run the simulation and interact with the keypad and LCD screen.
 
 ![home](Screens/home.png)
 
->This software is licensed under MIT License, See License for more information ©ZiadSheriif.
+> This software is licensed under MIT License,
+> See [License](https://github.com/ZiadSheriif/Door-Locker-Security-System/blob/master/License) for more information ©ZiadSheriif.
 
