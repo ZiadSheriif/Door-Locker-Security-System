@@ -48,8 +48,10 @@ Run the simulation and interact with the keypad and LCD screen.
 4. User has three attempts to enter the correct password before the system is blocked for one minute.
 
 ## Screenshots
-
+#### Home
 ![home](Screens/home.png)
+#### Init System
+![Init](Screens/init.png)
 
 > This software is licensed under MIT License,
 > See [License](https://github.com/ZiadSheriif/Door-Locker-Security-System/blob/master/License) for more information ©ZiadSheriif.
