@@ -9,9 +9,9 @@
  * Author: Ziad Sherif
  *
  *******************************************************************************/
-#include"gpio.h"
-#include"pwm.h"
-#include<avr/io.h>  /* to use Timer registers */
+#include "gpio.h"
+#include "pwm.h"
+#include <avr/io.h> /* to use Timer registers */
 
 /* Description:
  * The function responsible for trigger the Timer0 with the PWM Mode.
@@ -42,6 +42,5 @@ void PWM_Timer0_Start(uint8 duty_cycle)
 	 * 4. clock = F_CPU/8 CS00=0 CS01=1 CS02=0
 	 */
 
-	TCCR0 = (1<<WGM01) |(1<<WGM00) |(1<<COM01) |(1<<CS01) ;
-
+	TCCR0 = (1 << WGM01) | (1 << WGM00) | (1 << COM01) | (1 << CS01);
 }

@@ -9,9 +9,9 @@
  * Author: Ziad Sherif
  *
  *******************************************************************************/
-#include"dc_motor.h"
-#include"gpio.h"
-#include"pwm.h"
+#include "dc_motor.h"
+#include "gpio.h"
+#include "pwm.h"
 
 /* Description:
  * The Function responsible for setup the direction for the two
@@ -25,8 +25,8 @@ void DcMotor_Init(void)
 	GPIO_setupPinDirection(PORTA_ID, PIN1_ID, PIN_OUTPUT);
 
 	/* Stop at the DC-Motor at the beginning */
-	GPIO_writePin(PORTA_ID, PIN0_ID,0);
-	GPIO_writePin(PORTA_ID, PIN1_ID,0);
+	GPIO_writePin(PORTA_ID, PIN0_ID, 0);
+	GPIO_writePin(PORTA_ID, PIN1_ID, 0);
 }
 
 /* Description:
@@ -35,26 +35,26 @@ void DcMotor_Init(void)
  * Send the required duty cycle to the PWM driver based on the
   required speed value.
  */
-void DcMotor_Rotate(DcMotor_State state,uint8 speed)
+void DcMotor_Rotate(DcMotor_State state, uint8 speed)
 {
 	volatile uint8 set_duty_cycle = 0;
-	switch(state)
+	switch (state)
 	{
 	case CW:
-		GPIO_writePin(PORTA_ID, PIN0_ID,LOGIC_HIGH); /* PB0 = 1 */
-		GPIO_writePin(PORTA_ID, PIN1_ID,LOGIC_LOW); /* PB1 = 0 */
+		GPIO_writePin(PORTA_ID, PIN0_ID, LOGIC_HIGH); /* PB0 = 1 */
+		GPIO_writePin(PORTA_ID, PIN1_ID, LOGIC_LOW);  /* PB1 = 0 */
 		break;
 	case STOP:
-		GPIO_writePin(PORTA_ID, PIN0_ID,LOGIC_LOW); /* PB0 = 0 */
-		GPIO_writePin(PORTA_ID, PIN1_ID,LOGIC_LOW); /* PB0 = 0 */
+		GPIO_writePin(PORTA_ID, PIN0_ID, LOGIC_LOW); /* PB0 = 0 */
+		GPIO_writePin(PORTA_ID, PIN1_ID, LOGIC_LOW); /* PB0 = 0 */
 		break;
 	case A_CW:
-		GPIO_writePin(PORTA_ID, PIN0_ID,LOGIC_LOW); /* PB0 = 0 */
-		GPIO_writePin(PORTA_ID, PIN1_ID,LOGIC_HIGH); /* PB1 = 1 */
+		GPIO_writePin(PORTA_ID, PIN0_ID, LOGIC_LOW);  /* PB0 = 0 */
+		GPIO_writePin(PORTA_ID, PIN1_ID, LOGIC_HIGH); /* PB1 = 1 */
 		break;
 	}
 
-	switch(speed)
+	switch (speed)
 	{
 	case 0:
 		set_duty_cycle = 0;
@@ -76,5 +76,4 @@ void DcMotor_Rotate(DcMotor_State state,uint8 speed)
 	/* run PWM with the needed duty cycle */
 
 	PWM_Timer0_Start(set_duty_cycle);
-
 }

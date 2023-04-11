@@ -1,4 +1,4 @@
- /******************************************************************************
+/******************************************************************************
  *
  * Module: External EEPROM
  *
@@ -9,7 +9,6 @@
  * Author: Mohamed Tarek
  *
  *******************************************************************************/
-
 
 #ifndef EXTERNAL_EEPROM_H_
 #define EXTERNAL_EEPROM_H_
@@ -26,7 +25,7 @@
  *                      Functions Prototypes                                   *
  *******************************************************************************/
 
-uint8 EEPROM_writeByte(uint16 u16addr,uint8 u8data);
-uint8 EEPROM_readByte(uint16 u16addr,uint8 *u8data);
- 
+uint8 EEPROM_writeByte(uint16 u16addr, uint8 u8data);
+uint8 EEPROM_readByte(uint16 u16addr, uint8 *u8data);
+
 #endif /* EXTERNAL_EEPROM_H_ */

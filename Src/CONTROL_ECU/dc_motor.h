@@ -1,4 +1,4 @@
- /******************************************************************************
+/******************************************************************************
  *
  * Module: DC Motor
  *
@@ -12,14 +12,16 @@
 
 #ifndef DC_MOTOR_H_
 #define DC_MOTOR_H_
-#include"std_types.h"
+#include "std_types.h"
 /*******************************************************************************
  *                         Types Declaration                                   *
  *******************************************************************************/
 typedef enum
 {
-   STOP,CW,A_CW
-}DcMotor_State;
+   STOP,
+   CW,
+   A_CW
+} DcMotor_State;
 
 /*******************************************************************************
  *                      Functions Prototypes                                   *
@@ -40,6 +42,6 @@ void DcMotor_Init(void);
   required speed value.
  */
 
-void DcMotor_Rotate(DcMotor_State state,uint8 speed);
+void DcMotor_Rotate(DcMotor_State state, uint8 speed);
 
 #endif /* DC_MOTOR_H_ */
