@@ -11,7 +11,6 @@
 */
 
 #include "dc-motor.h"
-#include "pwm.h"
 
 /*
  * Function Definations
@@ -35,6 +34,5 @@ void DcMotor_Rotate(DcMotor_State state, uint8 speed)
     {
         GPIO_writePin(MOTOR_PORT_ID, MOTOR_PIN0_ID, 1);
         GPIO_writePin(MOTOR_PORT_ID, MOTOR_PIN1_ID, 0);
-        PWM_Timer0_Start(speed);
     }
 }

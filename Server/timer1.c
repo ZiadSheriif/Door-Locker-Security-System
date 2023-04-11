@@ -45,8 +45,8 @@ void Timer1_init(const Timer1_ConfigType *Config_Ptr)
     /* SET IF TIMER IS COMPARE MODE*/
     if (Config_Ptr->mode == COMPARE_MODE)
     {
-        OCR0 = config_ptr->compareValue; // Set Compare Value
-        TCCR1 |= (1 << WGM01)
+//        OCR0 = config_ptr->compareValue; // Set Compare Value
+//        TCCR1 |= (1 << WGM01)
     }
 
     /* SET IF TIMER IS OVERFLOW MODE*/
