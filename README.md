@@ -7,7 +7,14 @@ This project is a door locker security system that uses a password to lock and u
 - AVR 
 - Proteus 8 Professional
 - C language
-
+- I2C
+- Dc-Motors
+- PWM
+- UART
+- Buzzer
+- Timers
+- Keypad
+- Lcd
 
 ***Launch***
 To run this project, *you need to*:
